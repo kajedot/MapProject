@@ -11,8 +11,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestAdapter {
-    FragmentManager mapFragmentManager;
-    List<Rover> rovers;
+    private final FragmentManager mapFragmentManager;
+    private List<Rover> rovers;
 
     public RestAdapter(FragmentManager fragmentManager){
         mapFragmentManager = fragmentManager;
@@ -39,15 +39,10 @@ public class RestAdapter {
                 content.append("Status: ").append(responseBody.getStatus()).append("\n\n");
 
                 rovers = responseBody.getData();
-                for (Rover rover : rovers) {
-                    content.append("ID: ").append(rover.getRoverId()).append("\n");
-                    content.append("cord X: ").append(rover.getCordX()).append("\n");
-                    content.append("cord Y: ").append(rover.getCordY()).append("\n");
-                    content.append("angle: ").append(rover.getAngle()).append("\n\n");
-                }
 
-                MessageDialogFragment dialog = new MessageDialogFragment("API Response: \n" + content);
-                dialog.show(mapFragmentManager, "responseDialog");
+
+                RoversDialogFragment dialog = new RoversDialogFragment(rovers);
+                dialog.show(mapFragmentManager, "roversDialog");
             }
 
             @Override
