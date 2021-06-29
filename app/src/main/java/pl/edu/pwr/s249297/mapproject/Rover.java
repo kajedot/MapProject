@@ -1,5 +1,6 @@
 package pl.edu.pwr.s249297.mapproject;
 
+import com.google.android.gms.maps.model.Marker;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +8,7 @@ public class Rover {
 
     @SerializedName("rover_id")
     @Expose
-    private String roverId;
+    private Integer roverId;
     @SerializedName("cord_x")
     @Expose
     private Double cordX;
@@ -18,11 +19,13 @@ public class Rover {
     @Expose
     private Double angle;
 
-    public String getRoverId() {
+    private Marker marker;
+
+    public Integer getRoverId() {
         return roverId;
     }
 
-    public void setRoverId(String roverId) {
+    public void setRoverId(Integer roverId) {
         this.roverId = roverId;
     }
 
@@ -48,6 +51,14 @@ public class Rover {
 
     public void setAngle(Double angle) {
         this.angle = angle;
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
     }
 
 }

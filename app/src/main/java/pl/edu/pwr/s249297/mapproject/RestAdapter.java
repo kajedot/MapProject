@@ -2,6 +2,9 @@ package pl.edu.pwr.s249297.mapproject;
 
 import androidx.fragment.app.FragmentManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -12,18 +15,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestAdapter {
     private final FragmentManager mapFragmentManager;
-    private List<Rover> rovers;
+    private List<Rover> rovers = new ArrayList<>();
+    private Retrofit retrofit;
 
     public RestAdapter(FragmentManager fragmentManager){
         mapFragmentManager = fragmentManager;
 
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.1.41:8888/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    public void callApi(){
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-
         Call<APIResponse> call = jsonPlaceHolderApi.getAPIResponse();
         call.enqueue(new Callback<APIResponse>() {
             @Override
@@ -38,11 +44,8 @@ public class RestAdapter {
                 APIResponse responseBody = response.body();
                 content.append("Status: ").append(responseBody.getStatus()).append("\n\n");
 
-                rovers = responseBody.getData();
+                rovers = sortRovers(responseBody.getData());
 
-
-                RoversDialogFragment dialog = new RoversDialogFragment(rovers);
-                dialog.show(mapFragmentManager, "roversDialog");
             }
 
             @Override
@@ -55,5 +58,17 @@ public class RestAdapter {
 
     public List<Rover> getRovers() {
         return rovers;
+    }
+
+    private List<Rover> sortRovers(List<Rover> rovers){
+        Collections.sort(rovers, new RoversIdComp());
+        return rovers;
+    }
+
+    private static class RoversIdComp implements Comparator<Rover>{
+        @Override
+        public int compare(Rover o1, Rover o2) {
+            return o1.getRoverId().compareTo(o2.getRoverId());
+        }
     }
 }
