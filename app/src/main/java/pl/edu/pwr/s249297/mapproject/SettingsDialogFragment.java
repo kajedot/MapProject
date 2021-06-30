@@ -1,5 +1,6 @@
 package pl.edu.pwr.s249297.mapproject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -19,12 +20,13 @@ import androidx.fragment.app.FragmentManager;
 import java.util.Objects;
 
 public class SettingsDialogFragment extends DialogFragment {
+    private boolean saveFlag = false;
+    private Activity activity;
 
 
 
-
-    public SettingsDialogFragment(){
-
+    public SettingsDialogFragment(Activity activity){
+        this.activity = activity;
     }
 
 
@@ -42,6 +44,7 @@ public class SettingsDialogFragment extends DialogFragment {
                 .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        saveFlag = true;
                         EditText et = (EditText) v.findViewById(R.id.server_url);
                         String str = et.getText().toString();
                         Log.v("fdf", str);
@@ -59,6 +62,9 @@ public class SettingsDialogFragment extends DialogFragment {
     public void onDetach() {
 
         super.onDetach();
+
+        if (saveFlag)
+            activity.recreate();
 
 
     }

@@ -45,12 +45,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        restAdapter = new RestAdapter(getSupportFragmentManager());
+        restAdapter = new RestAdapter(getSupportFragmentManager(), getApplicationContext());
 
         mHandler = new Handler();
         startRepeatingTask();
 
-        settingsDialog = new SettingsDialogFragment();
+        settingsDialog = new SettingsDialogFragment(this);
 
         FloatingActionButton fab_settings = findViewById(R.id.fab_settings);
         fab_settings.setOnClickListener(view -> {

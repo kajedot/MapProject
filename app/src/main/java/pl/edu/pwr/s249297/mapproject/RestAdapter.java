@@ -1,5 +1,8 @@
 package pl.edu.pwr.s249297.mapproject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
@@ -17,14 +20,23 @@ public class RestAdapter {
     private final FragmentManager mapFragmentManager;
     private List<Rover> rovers = new ArrayList<>();
     private final Retrofit retrofit;
+    private Context context;
 
-    public RestAdapter(FragmentManager fragmentManager){
+    public RestAdapter(FragmentManager fragmentManager, Context context){
         mapFragmentManager = fragmentManager;
+        this.context = context;
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.41:8888/")
+                .baseUrl(getPrefIP())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    private String getPrefIP()
+    {
+        SharedPreferences sp = context.getSharedPreferences("server_ip",0);
+        String str = sp.getString("myStore","http://192.168.1.41:8888/");
+        return str;
     }
 
     public void callApi(){
