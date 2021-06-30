@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestAdapter {
     private final FragmentManager mapFragmentManager;
     private List<Rover> rovers = new ArrayList<>();
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
     public RestAdapter(FragmentManager fragmentManager){
         mapFragmentManager = fragmentManager;
@@ -45,7 +45,6 @@ public class RestAdapter {
                 content.append("Status: ").append(responseBody.getStatus()).append("\n\n");
 
                 rovers = sortRovers(responseBody.getData());
-
             }
 
             @Override

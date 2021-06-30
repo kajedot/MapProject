@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -27,7 +28,6 @@ public class RoversDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog constructionlop;
 
         if (roversList.isEmpty()){
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -49,7 +49,7 @@ public class RoversDialogFragment extends DialogFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     LatLng roverPos = new LatLng(roversList.get(which).getCordX(), roversList.get(which).getCordY());
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(roverPos));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(roverPos, 15f));
                 }
             });
 
@@ -63,12 +63,11 @@ public class RoversDialogFragment extends DialogFragment {
 
         int tabIdx = 0;
         for (Rover rover : rovers) {
-            StringBuilder content = new StringBuilder();
-            content.append("\nID: ").append(rover.getRoverId()).append("\n");
-            content.append("cord X: ").append(rover.getCordX()).append("\n");
-            content.append("cord Y: ").append(rover.getCordY()).append("\n");
-            content.append("angle: ").append(rover.getAngle()).append("\n");
-            roversStr[tabIdx] = content.toString();
+            String content = "\nID: " + rover.getRoverId() + "\n" +
+                    "cord X: " + rover.getCordX() + "\n" +
+                    "cord Y: " + rover.getCordY() + "\n" +
+                    "angle: " + rover.getAngle() + "\n";
+            roversStr[tabIdx] = content;
             tabIdx++;
         }
         return roversStr;

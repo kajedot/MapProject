@@ -19,7 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="10dp"
+        android:translationY="-52dp"
         android:src="@android:drawable/ic_menu_manage" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -33,7 +34,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:translationY="-16dp"
+        android:translationY="-8dp"
         android:src="@android:drawable/ic_dialog_info"
         app:layout_anchor="@id/fab_settings"
         app:layout_anchorGravity="top"/>
