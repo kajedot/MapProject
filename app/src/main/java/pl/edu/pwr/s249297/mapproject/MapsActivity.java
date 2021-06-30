@@ -3,6 +3,7 @@ package pl.edu.pwr.s249297.mapproject;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -39,6 +40,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mInterval = getPrefRefresh()*1000;
+
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -63,6 +67,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             roversDialog = new RoversDialogFragment(restAdapter.getRovers(), mMap);
             roversDialog.show(getSupportFragmentManager(), "roversDialog");
         });
+    }
+
+    private int getPrefRefresh()
+    {
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("pref",0);
+        int refresh_int = sp.getInt("refresh_int",5);
+        return refresh_int;
     }
 
     @Override
