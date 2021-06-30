@@ -34,8 +34,8 @@ public class RestAdapter {
 
     private String getPrefIP()
     {
-        SharedPreferences sp = context.getSharedPreferences("server_ip",0);
-        String str = sp.getString("myStore","http://192.168.1.41:8888/");
+        SharedPreferences sp = context.getSharedPreferences("pref",0);
+        String str = sp.getString("server_ip","http://192.168.1.41:8888/");
         return str;
     }
 

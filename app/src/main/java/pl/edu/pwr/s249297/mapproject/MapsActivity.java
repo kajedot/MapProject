@@ -50,14 +50,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mHandler = new Handler();
         startRepeatingTask();
 
-        settingsDialog = new SettingsDialogFragment(this);
+        settingsDialog = new SettingsDialogFragment(this, getApplicationContext(), getSupportFragmentManager());
 
         FloatingActionButton fab_settings = findViewById(R.id.fab_settings);
         fab_settings.setOnClickListener(view -> {
 
             settingsDialog.show(getSupportFragmentManager(), "settingsDialog");
-
-
         });
 
         FloatingActionButton fab_info = findViewById(R.id.fab_info);
